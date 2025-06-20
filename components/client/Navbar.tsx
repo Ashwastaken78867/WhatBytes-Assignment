@@ -3,6 +3,7 @@
 import { Search, ShoppingCart } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { PackageCheck } from "lucide-react"; // 👈 Add at top of the file
 
 export default function Navbar() {
   const router = useRouter();
@@ -32,8 +33,11 @@ export default function Navbar() {
   return (
     <nav className="bg-blue-600 text-white px-8 py-4 flex items-center justify-between">
       {/* Logo */}
-      <div className="text-2xl font-bold">Logo</div>
 
+<div className="flex items-center gap-2 text-white">
+  <PackageCheck className="w-6 h-6" />
+  <span className="text-2xl font-bold">WhatBytes</span>
+</div>
       {/* Search Bar */}
       <div className="flex items-center bg-blue-500 border border-cyan-300 rounded-full px-4 py-2 w-full max-w-md mx-4">
         <Search className="w-5 h-5 text-white mr-2" />
