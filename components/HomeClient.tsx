@@ -1,13 +1,11 @@
-// components/HomeClient.tsx
 'use client';
-
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-
 // ✅ Dynamic client components
 const Navbar = dynamic(() => import('@/components/client/Navbar'));
 const FilterSection = dynamic(() => import('@/components/client/FilterSection'));
 const ProductSection = dynamic(() => import('@/components/ProductSection'));
+const Footer = dynamic(() => import('@/components/client/Footer')); // ✅ Add this line
 
 export default function HomeClient() {
   return (
@@ -34,6 +32,13 @@ export default function HomeClient() {
             <ProductSection />
           </Suspense>
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="mt-10">
+        <Suspense fallback={<p>Loading footer...</p>}>
+          <Footer />
+        </Suspense>
       </div>
     </main>
   );
