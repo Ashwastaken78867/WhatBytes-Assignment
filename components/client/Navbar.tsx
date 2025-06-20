@@ -1,14 +1,17 @@
 "use client";
 
-import { Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart, PackageCheck } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { PackageCheck } from "lucide-react"; // 👈 Add at top of the file
+import { useCart } from "@/context/CartContext"; // ✅ Import useCart
 
 export default function Navbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { cart } = useCart(); // ✅ Get cart from context
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     const currentSearch = searchParams.get("search") || "";
@@ -19,7 +22,6 @@ export default function Navbar() {
     const newSearch = e.target.value;
     setSearchTerm(newSearch);
 
-    // Build the new URL with updated search param
     const params = new URLSearchParams(searchParams);
     if (newSearch.trim() !== "") {
       params.set("search", newSearch);
@@ -33,11 +35,11 @@ export default function Navbar() {
   return (
     <nav className="bg-blue-600 text-white px-8 py-4 flex items-center justify-between">
       {/* Logo */}
+      <div className="flex items-center gap-2 text-white">
+        <PackageCheck className="w-6 h-6" />
+        <span className="text-2xl font-bold">WhatBytes</span>
+      </div>
 
-<div className="flex items-center gap-2 text-white">
-  <PackageCheck className="w-6 h-6" />
-  <span className="text-2xl font-bold">WhatBytes</span>
-</div>
       {/* Search Bar */}
       <div className="flex items-center bg-blue-500 border border-cyan-300 rounded-full px-4 py-2 w-full max-w-md mx-4">
         <Search className="w-5 h-5 text-white mr-2" />
@@ -50,10 +52,19 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Cart Button */}
-      <button className="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md flex items-center gap-2">
+      {/* Cart Button with Badge */}
+      <button
+        className="relative bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md flex items-center gap-2"
+        onClick={() => router.push("/cart")} // Optional: add cart route later
+      >
         <ShoppingCart className="w-5 h-5" />
         <span>Cart</span>
+
+        {totalQuantity > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+            {totalQuantity}
+          </span>
+        )}
       </button>
     </nav>
   );

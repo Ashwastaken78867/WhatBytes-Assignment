@@ -1,10 +1,11 @@
 "use client";
 
-import { products } from "../lib/products"; // adjust if needed
+import { products } from "../lib/products";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/16/solid";
+import { useCart } from "@/context/CartContext"; // ✅ import useCart
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,6 +13,7 @@ const ProductDetail = () => {
   const product = products.find((p) => p.id === productId);
 
   const [qty, setQty] = useState(1);
+  const { addToCart } = useCart(); // ✅ Get addToCart from context
 
   if (!product) {
     return (
@@ -20,6 +22,17 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      quantity: qty,
+    });
+    alert("Added to cart!");
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -67,8 +80,11 @@ const ProductDetail = () => {
           </select>
         </div>
 
-        {/* Button */}
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md mt-4">
+        {/* Add to Cart Button */}
+        <button
+          onClick={handleAddToCart}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md mt-4"
+        >
           Add to Cart
         </button>
       </div>
