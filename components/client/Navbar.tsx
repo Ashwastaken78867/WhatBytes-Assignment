@@ -1,16 +1,16 @@
 "use client";
 
-import { Search, ShoppingCart, PackageCheck } from "lucide-react";
+import { Search, ShoppingCart, PackageCheck, UserCircle } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useCart } from "@/context/CartContext"; // ✅ Import useCart
+import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { cart } = useCart(); // ✅ Get cart from context
+  const { cart } = useCart();
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
@@ -52,20 +52,30 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Cart Button with Badge */}
-      <button
-        className="relative bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md flex items-center gap-2"
-        onClick={() => router.push("/cart")} // Optional: add cart route later
-      >
-        <ShoppingCart className="w-5 h-5" />
-        <span>Cart</span>
+      {/* Cart & Avatar */}
+      <div className="flex items-center gap-4">
+        {/* Cart Button with Badge */}
+        <button
+          className="relative bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-md flex items-center gap-2"
+          onClick={() => router.push("/cart")}
+        >
+          <ShoppingCart className="w-5 h-5" />
+          <span>Cart</span>
+          {totalQuantity > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+              {totalQuantity}
+            </span>
+          )}
+        </button>
 
-        {totalQuantity > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-            {totalQuantity}
-          </span>
-        )}
-      </button>
+        {/* Avatar/Profile Icon */}
+        <div
+          onClick={() => router.push("/profile")}
+          className="w-10 h-10 rounded-full bg-blue-800 flex items-center justify-center cursor-pointer hover:bg-blue-700 transition"
+        >
+          <UserCircle className="w-6 h-6 text-white" />
+        </div>
+      </div>
     </nav>
   );
 }

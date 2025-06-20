@@ -2,6 +2,8 @@
 
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
+import Lottie from 'lottie-react';
+import emptyCartAnimation from '@/public/animations/empty-cart.json.json';
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart } = useCart();
@@ -9,7 +11,14 @@ export default function CartPage() {
   const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   if (cart.length === 0) {
-    return <div className="text-center text-gray-700 mt-10">Your cart is empty.</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+        <div className="w-64 h-64">
+          <Lottie animationData={emptyCartAnimation} loop={true} />
+        </div>
+        <h2 className="text-lg font-semibold text-gray-600 mt-4">Your cart is currently empty</h2>
+      </div>
+    );
   }
 
   return (
@@ -24,21 +33,15 @@ export default function CartPage() {
               <h2 className="font-semibold text-lg">{item.title}</h2>
               <p className="text-gray-600">Rs: {item.price}</p>
 
-              {/* Quantity Selector */}
               <div className="flex items-center mt-2 gap-2">
-                <label htmlFor={`qty-${item.id}`} className="text-sm text-gray-700">
-                  Quantity:
-                </label>
+                <label className="text-sm text-gray-700">Quantity:</label>
                 <select
-                  id={`qty-${item.id}`}
                   value={item.quantity}
                   onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
                   className="border px-2 py-1 rounded"
                 >
                   {[1, 2, 3, 4, 5].map((q) => (
-                    <option key={q} value={q}>
-                      {q}
-                    </option>
+                    <option key={q} value={q}>{q}</option>
                   ))}
                 </select>
 
@@ -54,7 +57,6 @@ export default function CartPage() {
         ))}
       </div>
 
-      {/* Total */}
       <div className="text-right mt-10">
         <p className="text-xl font-semibold">Total: Rs {totalPrice}</p>
         <button className="bg-blue-600 text-white px-6 py-2 rounded mt-4 hover:bg-blue-700">
