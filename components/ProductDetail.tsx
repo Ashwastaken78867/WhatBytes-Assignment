@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/16/solid";
-import { useCart } from "@/context/CartContext"; // ✅ import useCart
+import { useCart } from "@/context/CartContext";
+import { toast } from "react-hot-toast";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const ProductDetail = () => {
   const product = products.find((p) => p.id === productId);
 
   const [qty, setQty] = useState(1);
-  const { addToCart } = useCart(); // ✅ Get addToCart from context
+  const { addToCart } = useCart();
 
   if (!product) {
     return (
@@ -31,7 +32,7 @@ const ProductDetail = () => {
       image: product.image,
       quantity: qty,
     });
-    alert("Added to cart!");
+    toast.success("Added to cart!");
   };
 
   return (

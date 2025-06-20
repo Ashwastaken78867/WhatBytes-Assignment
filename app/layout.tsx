@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext"; // ✅ Import Cart Context
+import { Toaster } from "react-hot-toast"; // ✅ Import Toaster
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <CartProvider>{children}</CartProvider> {/* ✅ Wrap App */}
+        <CartProvider>
+          {children}
+          <Toaster position="top-right" reverseOrder={false} /> {/* ✅ Add Toaster here */}
+        </CartProvider>
       </body>
     </html>
   );
