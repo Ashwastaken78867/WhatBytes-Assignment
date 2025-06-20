@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
 
 import HomeClient from "@/components/HomeClient";
 
