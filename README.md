@@ -54,7 +54,8 @@ A fully responsive E-Commerce web application built using **Next.js** and **Tail
 ## 📦 How to Run
 
 ```bash
-git clone https://github.com/Ashwastaken78867/E-commerce
+git clone https://github.com/Ashwastaken78867/WhatBytes-Assignment
 cd E-commerce
 npm install
 npm run dev
+
