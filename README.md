@@ -4,8 +4,8 @@ A fully responsive E-Commerce web application built using **Next.js** and **Tail
 
 ## 🚀 Live Demo
 
-- 🌐 [Live Site on Vercel](https://e-commerce-git-main-ash-bagdas-projects.vercel.app)
-- 📹 [Demo Video (Google Drive)](https://drive.google.com/file/d/1ZQd1T3Hp25Vxb5ZWs7havG2qZESD3ReP/view?usp=sharing)
+- 🌐 [Live Site on Vercel](https://what-bytes-assignment-omega.vercel.app/)
+- 📹 [Demo Video (Google Drive)](https://drive.google.com/file/d/1dMt9BfUd9pQcRwbt62aYDjBvacTqwuE5/view?usp=sharing)
 
 ---
 

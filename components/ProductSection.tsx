@@ -16,7 +16,7 @@ function isAvailable(arr1?: string[], arr2?: string[]) {
 
 const ProductSection = () => {
   const searchParams = useSearchParams();
-  const { addToCart } = useCart(); // ✅
+  const { addToCart } = useCart();
 
   const filteredProducts = useMemo(() => {
     const paramsObj = convertStringToQueriesObject(searchParams);
@@ -55,53 +55,59 @@ const ProductSection = () => {
   }, [searchParams]);
 
   if (filteredProducts.length === 0) {
-    return <p className="text-center text-slate-700">No Product Available.</p>;
+    return <p className="text-center text-gray-500 text-lg mt-10">No Products Available.</p>;
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {filteredProducts.map((product) => (
-        <div key={product.id} className="border p-4 rounded-md shadow-sm hover:shadow-md transition">
-          {/* Image & Title inside Link */}
-          <Link href={`/product/${product.id}`}>
+        <div
+          key={product.id}
+          className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col"
+        >
+          {/* Image */}
+          <Link href={`/product/${product.id}`} className="relative group overflow-hidden rounded-t-lg">
             <Image
               src={product.image}
               alt={product.title}
               width={400}
               height={400}
-              className="rounded-md aspect-[4/5] object-cover object-top"
+              className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
             />
-            <div className="space-y-2 mt-4">
-              <h2 className="font-semibold text-lg">{product.title}</h2>
-            </div>
           </Link>
 
-          {/* Details */}
-          <p className="text-sm text-slate-600">{product.desc}</p>
-          <p className="text-sm text-slate-500">
-            Category: {product.categories.join(', ')}
-          </p>
-          <p className="font-semibold text-base">Rs: {product.price}</p>
-          <div className="flex items-center gap-2 mt-2">
-            <StarIcon className="w-5 h-5 text-yellow-500" />
-            <span className="text-sm">4.2</span>
-          </div>
+          {/* Product Info */}
+          <div className="flex-1 flex flex-col justify-between p-4 space-y-2">
+            <Link href={`/product/${product.id}`} className="hover:underline">
+              <h2 className="font-semibold text-lg text-gray-900">{product.title}</h2>
+            </Link>
 
-          {/* ✅ Add to Cart Button */}
-          <button
-            onClick={() =>
-              addToCart({
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                image: product.image,
-                quantity: 1,
-              })
-            }
-            className="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded w-full"
-          >
-            Add to Cart
-          </button>
+            <p className="text-sm text-gray-600">{product.desc}</p>
+            <p className="text-sm text-gray-500">Category: {product.categories.join(', ')}</p>
+            <p className="font-semibold text-lg text-gray-800">Rs {product.price}</p>
+
+            {/* Static Rating */}
+            <div className="flex items-center gap-1 mt-1">
+              <StarIcon className="w-5 h-5 text-yellow-500" />
+              <span className="text-sm text-gray-600 ml-2">4.2</span>
+            </div>
+
+            {/* Add to Cart */}
+            <button
+              onClick={() =>
+                addToCart({
+                  id: product.id,
+                  title: product.title,
+                  price: product.price,
+                  image: product.image,
+                  quantity: 1,
+                })
+              }
+              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-colors duration-200"
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       ))}
     </div>
