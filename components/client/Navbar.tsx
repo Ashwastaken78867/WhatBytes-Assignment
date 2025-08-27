@@ -37,7 +37,7 @@ export default function Navbar() {
       {/* Logo */}
       <div className="flex items-center gap-2 text-white">
         <PackageCheck className="w-6 h-6" />
-        <span className="text-2xl font-bold">WhatBytes</span>
+        <span className="text-2xl font-bold">ByteCart</span>
       </div>
 
       {/* Search Bar */}
